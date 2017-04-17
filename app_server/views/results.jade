@@ -21,10 +21,10 @@ block content
       .col-md-7.col-md-offset-2
         form
           .input-group(ng-controller="inputSearchCtrl")  
-            .input-group-btn
-              button.btn.btn-default(type='button') 中文
-              button.btn.btn-default(type='button') pinyin
-              button.btn.btn-default(type='button') English
+            .input-group-btn(ng-controller="StyleCtrl")
+              button.btn.btn-default(type='button', ng-click="changeClass('btn1')", ng-class="class1") 中文
+              button.btn.btn-default.active(type='button', ng-click="changeClass('btn2')", ng-class="class2") pinyin
+              button.btn.btn-default(type='button', ng-click="changeClass('btn3')", ng-class="class3") English
             input.form-control(ng-model='Fact.searchparam',type='text',placeholder='Search for...')
             .input-group-btn
               button.btn.btn-default(type='submit',ng-click="newSearch()") Go!
