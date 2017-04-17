@@ -105,35 +105,39 @@ var FlickrbuildPicCtrlv2 = function(FlickrsearchChinaPictures, ValidateLandscape
         "pics": []
     };
 
-    for (i = 0; i < 10; i++) {
-        console.log($scope.tabpics);
-        FlickrsearchChinaPictures.runSearch().async().then(function(d) {
 
+    console.log($scope.tabpics);
+    FlickrsearchChinaPictures.runSearch().async().then(function(d) {
+
+        for (i = 0; i < 10; i++) {
 
             $scope.tabpics['pics'].push({
-                'url': 'https://farm' + d.data.farm + '.staticflickr.com/' + d.data.server + '/' + d.data.id + '_' + d.data.secret + '_n.jpg',
-                'title': d.data.title,
-                'id': d.data.id,
+                'url': 'https://farm' + d.data[i].farm + '.staticflickr.com/' + d.data[i].server + '/' + d.data[i].id + '_' + d.data[i].secret + '_n.jpg',
+                'title': d.data[i].title,
+                'id': d.data[i].id,
                 'isLandscape': ""
-            });;
-            var number = $scope.tabpics['pics'].length;
-            console.log(number);
-            // $scope.tabpics['pics'][length].url = 'https://farm' + d.data.farm + '.staticflickr.com/' + d.data.server + '/' + d.data.id + '_' + d.data.secret + '_z.jpg';
-            // $scope.tabpics['pics'][length].title = d.data.title
-            // $scope.tabpics['pics'][length].id = d.data.id;
-
-            ValidateLandscapePictures.isLandscape($scope.tabpics['pics'][number - 1].id).async().then(function(d) {
-                $scope.tabpics['pics'][number - 1].isLandscape = d.isLandscape;
-                if (number == 10) {
-                    finalise();
-                }
             });
+        }
 
+    var number = 0;
 
+    for (i = 0; i < 10; i++) {
+        ValidateLandscapePictures.isLandscape($scope.tabpics['pics'][i].id).async().then(function(d) {
+           console.log(  $scope.tabpics['pics']);
+            $scope.tabpics['pics'][number].isLandscape = d.isLandscape;
+            number++;
 
-
+            if (number == 10) {
+                finalise();
+            }
         });
     }
+
+      });
+
+
+
+
 
     function finalise() {
 
@@ -176,13 +180,21 @@ var FlickrsearchChinaPictures = function($http) {
                     console.log("page" + randpage + " - pic " + randpic);
                     console.log(response.data.photos.photo[randpic]);
                     return {
-                        // data: response.data.photos.photo[randpic-1]
-                        // data2: response.data.photos.photo[randpic-2]
-                        data: response.data.photos.photo[randpic]
-                        // data4: response.data.photos.photo[randpic+1]
-                        // data5: response.data.photos.photo[randpic+2]
+                        'data': [
+                                response.data.photos.photo[randpic-4],
+                                response.data.photos.photo[randpic - 3],
+                                response.data.photos.photo[randpic - 2],
+                                response.data.photos.photo[randpic - 1],
+                                response.data.photos.photo[randpic],
+                                response.data.photos.photo[randpic + 1],
+                                response.data.photos.photo[randpic + 2],
+                                response.data.photos.photo[randpic + 3],
+                                response.data.photos.photo[randpic + 4],
+                                response.data.photos.photo[randpic + 5]]
                     };
-                })
+
+
+                });
 
                 return promise;
             }
