@@ -4,6 +4,7 @@ var myApp = angular.module('xmapp', []);
 // Search related  shared functions and variables
 myApp.factory('Fact', function() {
     return {
+        searchtype: 'pinyin',
         searchparam: 'chi',
         results: [{}],
         timequery: 0,
@@ -37,8 +38,7 @@ var queryInfoCtrl = function(resultsData, $scope, Fact) {
 
 var resultsListCtrl = function(resultsData, $scope, Fact) {
     $scope.Fact = Fact;
-    console.log(Fact.searchparam)
-    resultsData.runSearch(Fact.searchparam).async().then(function(d) {
+    resultsData.runSearch(Fact.searchparam, Fact.searchtype).async().then(function(d) {
         $scope.Fact.results = d.data1;
         $scope.Fact.nbresults = d.data1.length;
         $scope.Fact.timequery = d.time1 / 1000;
@@ -50,7 +50,7 @@ var inputSearchCtrl = function(resultsData, $scope, Fact) {
     $scope.Fact = Fact;
     console.log(Fact.searchparam)
     $scope.newSearch = function() {
-        resultsData.runSearch(Fact.searchparam).async().then(function(d) {
+        resultsData.runSearch(Fact.searchparam, Fact.searchtype).async().then(function(d) {
             $scope.Fact.results = d.data1;
             $scope.Fact.nbresults = d.data1.length;
             $scope.Fact.timequery = d.time1 / 1000;
@@ -87,14 +87,17 @@ var StyleCtrl = function($scope) {
             $scope.class1 = "active";
             $scope.class2 = "";
             $scope.class3 = "";
+            $scope.Fact.searchtype = 'chinese';
         } else if (btn === 'btn2') {
             $scope.class2 = "active";
             $scope.class1 = "";
             $scope.class3 = "";
+            $scope.Fact.searchtype = 'pinyin';
         } else if (btn === 'btn3') {
             $scope.class3 = "active";
             $scope.class1 = "";
             $scope.class2 = "";
+            $scope.Fact.searchtype = 'english';
         }
         console.log("AFTER - class 1 " + $scope.class1 + " class2" + $scope.class2 + " class3" + $scope.class3)
     }
@@ -102,16 +105,17 @@ var StyleCtrl = function($scope) {
 
 
 var resultsData = function($http) {
-    this.runSearch = function(param) {
+    this.runSearch = function(param, searchtype) {
         var myService = {
             async: function() {
-                var promise = $http.get('/api/search/pinyin/' + param).then(function(response) {
 
+                var promise = $http.get('/api/search/'+searchtype+'/' + param).then(function(response) {
                     return {
                         data1: response.data,
                         time1: response.config.responseTimestamp - response.config.requestTimestamp
                     };
                 });
+
                 return promise;
             }
         };
@@ -261,6 +265,9 @@ var ValidateLandscapePictures = function($http) {
                     console.log(response.data.sizes.size[4].height)
                     var width = response.data.sizes.size[4].width;
                     var height = response.data.sizes.size[4].height;
+                    if (response.data.stat === 'fail' )  return {
+                            isLandscape: 'false'
+                        };
 
                     if (width == 320 && height <= 240) { //We want a ratio of 1.5 or wider
                         console.log("is LAndscape")

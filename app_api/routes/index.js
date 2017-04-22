@@ -16,6 +16,8 @@ router.get('/word/pinyin/:pinyinword', ctrlCharacters.pinyinWordsReadOne);
 /* Find words matching a given pattern*/
 router.get('/search/pinyin/:pinyinpattern', ctrlCharacters.pinyinWordsSearchPattern);
 router.get('/search/english/:englishpattern', ctrlCharacters.englishWordsSearchPattern);
+router.get('/search/chinese/:chinesepattern', ctrlCharacters.chineseWordsSearchPattern);
+
 
 // router.get('/admin/linkchar2words', ctrlCharacters.linkchar2words);
 // router.get('/admin/removecharfromwords', ctrlCharacters.removecharfromwords) ;
