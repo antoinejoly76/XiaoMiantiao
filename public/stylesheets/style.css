@@ -12,20 +12,6 @@ tr {
     font-size: 1.5em;
 }
 
-figure img{
-    /*float: left;*/
-    /*margin: 0 0 10px 10px;*/
-    border: solid 1px;
-    display:block;
-     margin-left:auto;
-     margin-right:auto;
-}
-
-.vcenter {
-    display: inline;
-    vertical-align: middle;
-    float: middle;
-}
 
 .caption p{
     text-align: center;
@@ -36,4 +22,24 @@ figure img{
 .vertical-align {
     display: flex;
     align-items: center;
+}
+
+.red {
+    color: red;
+}
+
+.black {
+    color: black;
+}
+
+.blue {
+    color: blue;
+}
+
+.orange {
+  color: orange;
+}
+
+.green {
+  color: green;
 }

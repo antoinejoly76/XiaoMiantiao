@@ -8,16 +8,14 @@ block content
     .row
     p
     .row.vertical-align
-      .col-md-3.col-md-offset-4
+    
+    
+    .row.vertical-align     
+      .col-md-3.col-md-offset-1
         .thumbnail(ng-controller="FlickrbuildPicCtrlv2")
             img.responsive(src='{{getChinaPicUrl}}')
             .caption 
-                p {{getChinaPicTitle}}
-    .row
-    p
-    .row
-    p      
-    .row.vertical-align       
+                p {{getChinaPicTitle}}  
       .col-md-7.col-md-offset-2
         form
           .input-group(ng-controller="inputSearchCtrl")  
@@ -51,7 +49,10 @@ block content
                 th HSK level
                 th Associated characters 
               tr(ng-repeat="result in Fact.results")
-                td {{result.chinese}}
+                td 
+                  span(ng-repeat="char in result.characters") 
+                    span(ng-class="{red: char.tone == 1, orange: char.tone == 2, green: char.tone == 3, blue: char.tone == 4, black: char.tone == 0}") 
+                      {{char.chinese }}
                 td {{result.pinyin2}}
                 td {{result.translation}}
                 td {{result.level}}

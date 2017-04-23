@@ -1,3 +1,4 @@
 var script = require('./scripts');
 
-script.addStrippedPinyin();
+//script.removecharfromwords();
+script.linkchar2words();

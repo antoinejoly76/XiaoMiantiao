@@ -20,15 +20,90 @@ module.exports.addStrippedPinyin = function() {
     });
 };
 
-
-module.exports.linkchar2words = function(req, res) {
-    var cursor = Word.find({}).cursor();
+module.exports.addToneToChars = function(req, res) {
+    var cursor = Char.find({}).cursor();
     cursor.on('data', function(wd) {
-        updateWord(wd);
+        setTone(wd);
+
     });
     cursor.on('close', function() {
         console.log("stream closed");
     });
+};
+
+function setTone(wd) {
+  var first_tone_pattern = /[ūǖōāēī]/;
+  var second_tone_pattern = /[éóúáí]/;
+  var third_tone_pattern = /[ǎǐǒǔǚ]/;
+  var fourth_tone_pattern = /[àùìèò]/;
+
+  var pin = wd.pinyin
+  var tone = 0;
+
+  if (pin.search(first_tone_pattern) > -1)
+    tone = 1;
+  else if (pin.search(second_tone_pattern) > -1)
+    tone = 2;
+  else if (pin.search(third_tone_pattern) > -1)
+    tone = 3;
+  else if (pin.search(fourth_tone_pattern) > -1)
+    tone = 4;
+  else tone = 0;
+  wd.tone = tone
+  wd.save(function(err, wd) {
+    console.log("add tone" + tone +  " for " + wd)
+  });
+
+
+}
+
+
+module.exports.linkchar2words = function(req, res) {
+     var cursor = Word.find({}).cursor();
+    // cursor.on('data', function(wd) {
+    //     updateWord(wd, 0);
+    // });
+    //
+    //
+    // cursor.on('close', function() {
+    //     console.log("stream closed");
+    // });
+
+    // cursor.on('data', function(wd) {
+    //     updateWord(wd, 1);
+    // });
+    //
+    // cursor.on('close', function() {
+    //     console.log("stream closed");
+    // });
+    //
+    // cursor.on('data', function(wd) {
+    //     updateWord(wd, 2);
+    // });
+    //
+    // cursor.on('close', function() {
+    //     console.log("stream closed");
+    // });
+    //
+    // cursor.on('data', function(wd) {
+    //     updateWord(wd, 3);
+    // });
+    //
+    // cursor.on('close', function() {
+    //     console.log("stream closed");
+    // });
+    //
+    cursor.on('data', function(wd) {
+        updateWord(wd, 4);
+    });
+
+    cursor.on('close', function() {
+        console.log("stream closed");
+    });
+
+
+
+
 };
 
 
@@ -58,28 +133,31 @@ function removeChildrenChars(wd) {
 }
 
 
-function updateWord(wd) {
-    for (var j = 0; j < wd.chinese.length; j++) {
+function updateWord(wd, num) {
+
+
+  //  for (var j = 0; j < wd.chinese.length; j++) {
         var char1;
         Char
             .find({
-                "chinese": wd.chinese[j]
+                "chinese": wd.chinese[num]
             })
             .exec(function(err, character) {
                 char1 = character[0];
-                console.log("updating char " + char1)
+                if (char1) {
                 wd.characters.addToSet({
                     chinese: char1.chinese,
                     pinyin: char1.pinyin,
-                    translation: char1.translation
+                    translation: char1.translation,
+                    tone: char1.tone
                 });
                 wd.save(function(err, wd) {
                     console.log("save successful for " + wd)
                 });
-
+              }
             });
 
-    }
+  //  }
 
 
 };

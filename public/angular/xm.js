@@ -59,6 +59,14 @@ var inputSearchCtrl = function(resultsData, $scope, Fact) {
     }
 }
 
+var removeblanksFilter = function() {
+    return function(string) {
+        if (!angular.isString(string)) {
+            return string;
+        }
+        return string.replace(/[\s]/g, '');
+    };
+}
 
 
 var FlickrbuildPicCtrl = function(FlickrsearchChinaPictures, ValidateLandscapePictures, $scope) {
@@ -294,4 +302,4 @@ var ValidateLandscapePictures = function($http) {
 
 
 myApp.controller('resultsListCtrl', resultsListCtrl).controller('inputSearchCtrl', inputSearchCtrl).controller('queryInfoCtrl', queryInfoCtrl).service('resultsData', resultsData).controller('FlickrbuildPicCtrl', FlickrbuildPicCtrl).service('ValidateLandscapePictures', ValidateLandscapePictures).service('FlickrsearchChinaPictures', FlickrsearchChinaPictures)
-    .controller('FlickrbuildPicCtrlv2', FlickrbuildPicCtrlv2).controller('StyleCtrl', StyleCtrl);
+    .controller('FlickrbuildPicCtrlv2', FlickrbuildPicCtrlv2).controller('StyleCtrl', StyleCtrl).filter('removeblanksFilter',removeblanksFilter);
