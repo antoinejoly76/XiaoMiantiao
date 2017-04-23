@@ -208,6 +208,7 @@ var FlickrbuildPicCtrlv2 = function(FlickrsearchChinaPictures, ValidateLandscape
 
         }
         if (i === pics.length) i--; // We went through 10 pictures and did not find any landscape. We send the last picture by default
+
         $scope.getChinaPicUrl = pics[i].url;
         $scope.getChinaPicTitle = pics[i].title;
 

@@ -32,7 +32,7 @@ block content
       .col-md-12
         .panel.panel-primary
             .panel-heading(ng-controller="queryInfoCtrl",role='alert') {{Fact.nbresults}} results retrieved in {{Fact.timequery}}  seconds
-            .panel-body
+            .panel-body(ng-controller="resultsListCtrl") 
                 table.table
                     tr
                         th Chinese
