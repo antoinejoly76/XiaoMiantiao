@@ -9,23 +9,25 @@ block content
     p
     .row.vertical-align
     
-    
-    .row.vertical-align     
-      .col-md-2
-        .thumbnail(ng-controller="FlickrbuildPicCtrlv2")
-            img.responsive(src='{{getChinaPicUrl}}')
-            //- .caption 
-            //-     p {{getChinaPicTitle}}  
-      .col-md-8
-        form
-          .input-group(ng-controller="inputSearchCtrl")  
-            .input-group-btn(ng-controller="StyleCtrl")
-              button.btn.btn-default(type='button', ng-click="changeClass('btn1')", ng-class="class1") 中文
-              button.btn.btn-default.active(type='button', ng-click="changeClass('btn2')", ng-class="class2") pinyin
-              button.btn.btn-default(type='button', ng-click="changeClass('btn3')", ng-class="class3") English
-            input.form-control(ng-model='Fact.searchparam',type='text',placeholder='Search for...')
-            .input-group-btn
-              button.btn.btn-default(type='submit',ng-click="newSearch()") Go!
+    .panelsearch.panel.panel-primary
+      .panel-body
+        .row.vertical-align     
+          .panel.panel-primary
+          .col-md-2
+            .thumbnail(ng-controller="FlickrbuildPicCtrlv2")
+                img.responsive(src='{{getChinaPicUrl}}')
+                //- .caption 
+                //-     p {{getChinaPicTitle}}  
+          .col-md-8.col-md-offset-1
+            form
+              .input-group(ng-controller="inputSearchCtrl")  
+                .input-group-btn(ng-controller="StyleCtrl")
+                  button.btn.btn-default(type='button', ng-click="changeClass('btn1')", ng-class="class1") 中文
+                  button.btn.btn-default.active(type='button', ng-click="changeClass('btn2')", ng-class="class2") pinyin
+                  button.btn.btn-default(type='button', ng-click="changeClass('btn3')", ng-class="class3") English
+                input.form-control(ng-model='Fact.searchparam',type='text',placeholder='Search for...')
+                .input-group-btn
+                  button.btn.btn-default(type='submit',ng-click="newSearch()") Go!
     .row
     p
     .row

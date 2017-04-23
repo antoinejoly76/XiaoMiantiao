@@ -12,7 +12,9 @@ tr {
     font-size: 1.2em;
 }
 
-
+.panelsearch {
+    background-image: -webkit-linear-gradient(top, #f5f5f5 0%, #f2f0f0 100%);
+}
 .caption p{
     text-align: center;
     font-style: italic;

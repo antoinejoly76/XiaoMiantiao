@@ -167,11 +167,13 @@ var FlickrbuildPicCtrlv2 = function(FlickrsearchChinaPictures, ValidateLandscape
         }
 
         var number = 0;
-
+        var i=0;
         for (i = 0; i < 10; i++) {
             ValidateLandscapePictures.isLandscape($scope.tabpics['pics'][i].id).async().then(function(d) {
+              var a = number;
+              console.log(a);
                 // console.log($scope.tabpics['pics']);
-                $scope.tabpics['pics'][number].isLandscape = d.isLandscape;
+                $scope.tabpics['pics'][a].isLandscape = d.isLandscape;
                 number++;
 
                 if (number == 10) {
