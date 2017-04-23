@@ -199,6 +199,7 @@ var FlickrbuildPicCtrlv2 = function(FlickrsearchChinaPictures, ValidateLandscape
             if (pic.isLandscape == 'true') {
                 console.log("Pic number" + i + " is Landscape... !")
                 console.log("we will display pic" + i + " title is " + pic.title);
+                console.log(pic.url);
                 break;
             } else {
                 console.log("Pic number" + i + "is not Landscape... !")
@@ -263,7 +264,7 @@ var ValidateLandscapePictures = function($http) {
         var myService = {
             async: function() {
                 console.log(picId);
-                if (!picId) return {
+                if (picId === null) return {
                     isLandscape: 'false'
                 };
 

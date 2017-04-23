@@ -11,12 +11,12 @@ block content
     
     
     .row.vertical-align     
-      .col-md-3.col-md-offset-1
+      .col-md-2
         .thumbnail(ng-controller="FlickrbuildPicCtrlv2")
             img.responsive(src='{{getChinaPicUrl}}')
-            .caption 
-                p {{getChinaPicTitle}}  
-      .col-md-7.col-md-offset-2
+            //- .caption 
+            //-     p {{getChinaPicTitle}}  
+      .col-md-8
         form
           .input-group(ng-controller="inputSearchCtrl")  
             .input-group-btn(ng-controller="StyleCtrl")
@@ -29,37 +29,34 @@ block content
     .row
     p
     .row
+      .col-md-12
+        .panel.panel-primary
+            .panel-heading(ng-controller="queryInfoCtrl",role='alert') {{Fact.nbresults}} results retrieved in {{Fact.timequery}}  seconds
+            .panel-body
+                table.table
+                    tr
+                        th Chinese
+                        th Pinyin
+                        th English
+                        th HSK level
+                        th Associated characters 
+                    tr(ng-repeat="result in Fact.results")
+                        td 
+                          span(ng-repeat="char in result.characters") 
+                            span(ng-class="{red: char.tone == 1, orange: char.tone == 2, green: char.tone == 3, blue: char.tone == 4, black: char.tone == 0}") 
+                                 {{char.chinese }}
+                        td {{result.pinyin2}}
+                        td {{result.translation}}
+                        td {{result.level}}
+                        td
+                          span(ng-repeat="char in result.characters") 
+                            abbr(title='{{char.pinyin}} - {{char.translation}}')  {{char.chinese}} ,
+                    
+    .row
     p
     .row
     p
-    .row        
-    p
-    .row
-    .alert.alert-info(ng-controller="queryInfoCtrl",role='alert') {{Fact.nbresults}} results retrieved in {{Fact.timequery}}  seconds
-    .row
-    p
-    .row
-    p
-    .col-md-12(ng-controller="resultsListCtrl") 
-        table.table
-            tr
-                th Chinese
-                th Pinyin
-                th English
-                th HSK level
-                th Associated characters 
-              tr(ng-repeat="result in Fact.results")
-                td 
-                  span(ng-repeat="char in result.characters") 
-                    span(ng-class="{red: char.tone == 1, orange: char.tone == 2, green: char.tone == 3, blue: char.tone == 4, black: char.tone == 0}") 
-                      {{char.chinese }}
-                td {{result.pinyin2}}
-                td {{result.translation}}
-                td {{result.level}}
-                td
-                  span(ng-repeat="char in result.characters") 
-                    abbr(title='{{char.pinyin}} - {{char.translation}}')  {{char.chinese}} ,
-                  
+    
 
     .row
       .col-md-12.col-md-offset-10
