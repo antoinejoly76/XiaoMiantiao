@@ -71,7 +71,7 @@ module.exports.englishWordsSearchPattern = function(req, res) {
   console.log(req.params.englishpattern);
     Word
         .find({
-            "translation": new RegExp('(^[,;" ]?|^.* +)'+req.params.englishpattern+'[,;" ]?.*')
+            "translation": new RegExp('(^|^.*[,;" ]+)'+req.params.englishpattern+'([,;" ]+.*$|$)')
         })
         .exec(function(err, word) {
             sendJsonResponse(res, 200, word);

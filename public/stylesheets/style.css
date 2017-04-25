@@ -45,3 +45,9 @@ tr {
 .green {
   color: green;
 }
+
+.brandcl {
+  padding: 2px 2px;
+  font-size: 15px;
+  line-height: 15px;
+}
