@@ -8,20 +8,16 @@ block content
                 .container
                     .row
                         .col-md-3-md-offset-2
-                            h1=pageHeader.title
+                            h1.strap=pageHeader.title
                         .col-md-3
                               span
                                 img(src='/images/xiaomiantiao128.png', width='100', height='100')
             
                     .row
                           .col-md-10
-                              p= pageHeader.strapline
-                          .col-md-10
+                              p 
+                              p
+                              p.strap=pageHeader.strapline
+                          .col-md-2.col-md-offset-10
                               a.btn.btn-primary.btn-lg(href='#', role='button') About
-        .row                    
-          .col-md-8.col-md-offset-2
-              .input-group
-                  input.form-control(type='text',placeholder='Search for...')
-                  span.input-group-btn
-                      a(href='/results/')
-                        button.btn.btn-default(type='button') Go!
+    

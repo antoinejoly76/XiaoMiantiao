@@ -5,10 +5,11 @@ var myApp = angular.module('xmapp', []);
 myApp.factory('Fact', function() {
   return {
     searchtype: 'pinyin',
-    searchparam: 'chi',
+    searchparam: '',
     results: [{}],
     timequery: 0,
-    nbresults: 0
+    nbresults: 0,
+    activeTab: ""
   }
 });
 
@@ -38,13 +39,22 @@ var queryInfoCtrl = function(resultsData, $scope, Fact) {
 
 var resultsListCtrl = function(resultsData, $scope, Fact) {
   $scope.Fact = Fact;
-  resultsData.runSearch(Fact.searchparam, Fact.searchtype).async().then(function(d) {
-    $scope.Fact.results = d.data1;
-    $scope.Fact.nbresults = d.data1.length;
-    $scope.Fact.timequery = d.time1 / 1000;
-    console.log(d);
-  });
+
 }
+
+var navBarCtrl = function($scope, $location, Fact) {
+  console.log(Fact.searchparam);
+    $scope.Fact = Fact;
+    var LOCALHOST= 'http://localhost:3000/';
+    console.log($location.$$absUrl);
+    if ($location.$$absUrl == LOCALHOST + 'results/')
+          $scope.Fact.activeTab = "Search";
+    else if ($location.$$absUrl == LOCALHOST + 'about/')
+          $scope.Fact.activeTab = "About";
+    else
+          $scope.Fact.activeTab = "Home";
+  }
+
 
 var inputSearchCtrl = function(resultsData, $scope, Fact) {
   $scope.Fact = Fact;
@@ -326,5 +336,5 @@ var ValidateLandscapePictures = function($http) {
 
 
 
-myApp.controller('resultsListCtrl', resultsListCtrl).controller('inputSearchCtrl', inputSearchCtrl).controller('queryInfoCtrl', queryInfoCtrl).service('resultsData', resultsData).controller('FlickrbuildPicCtrl', FlickrbuildPicCtrl).service('ValidateLandscapePictures', ValidateLandscapePictures).service('FlickrsearchChinaPictures', FlickrsearchChinaPictures)
+myApp.controller('navBarCtrl',navBarCtrl).controller('resultsListCtrl', resultsListCtrl).controller('inputSearchCtrl', inputSearchCtrl).controller('queryInfoCtrl', queryInfoCtrl).service('resultsData', resultsData).controller('FlickrbuildPicCtrl', FlickrbuildPicCtrl).service('ValidateLandscapePictures', ValidateLandscapePictures).service('FlickrsearchChinaPictures', FlickrsearchChinaPictures)
   .controller('FlickrbuildPicCtrlv2', FlickrbuildPicCtrlv2).controller('StyleCtrl', StyleCtrl).filter('removeblanksFilter', removeblanksFilter);

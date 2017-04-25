@@ -1,6 +1,7 @@
 body {
 
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+   overflow: hidden;
 }
 
 a {
@@ -50,4 +51,43 @@ tr {
   padding: 2px 2px;
   font-size: 15px;
   line-height: 15px;
+}
+
+.strap {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+
+.container .text-muted {
+  margin: 20px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.content {
+  height: 820px;
+   overflow-y: scroll;
 }

@@ -1,11 +1,19 @@
 
 doctype html
 html(ng-app='xmapp')
-    nav.navbar.navbar-default
+    nav.navbar.navbar-default(ng-controller="navBarCtrl")
       .container-fluid
         .navbar-header
           a.brandcl.navbar-brand(href='#')
             img(alt='Brand', src="/images/xiaomiantiaos.png")
+          ul.nav.navbar-nav
+           li(ng-class="{active: Fact.activeTab == 'Home'}")
+              a(href="/") Home 
+           li(ng-class="{active: Fact.activeTab == 'Search'}")
+              a(href="/results/") Search
+            li(ng-class="{active: Fact.activeTab == 'About'}")
+               a(href="/about/") About
+
 
     head
         meta(name='viewport', content='width=device-width, initial-scale=1.0')
@@ -15,11 +23,14 @@ html(ng-app='xmapp')
         link(rel='stylesheet', href='/stylesheets/style.css')
         
     body
-    .container
-        block content
-
-        script(src='/javascripts/jquery.min.js')
-        script(src='/angular/angular.min.js')
-        script(src='/angular/angular.min.js')
-        script(src='/angular/xm.js')
-        script(src='/bootstrap/js/bootstrap.min.js')
+      .container
+          block content
+          
+          script(src='/javascripts/jquery.min.js')
+          script(src='/angular/angular.min.js')
+          script(src='/angular/angular.min.js')
+          script(src='/angular/xm.js')
+          script(src='/bootstrap/js/bootstrap.min.js')    
+      footer.footer
+        .container
+          p.text-muted=pageHeader.footercontent

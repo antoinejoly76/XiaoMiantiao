@@ -13,7 +13,8 @@ module.exports.home = function(req, res) {
         title: 'XiaoMiantiao - simple Chinese dictionary',
         pageHeader: {
             title: 'XiaoMiantiao',
-            strapline: 'Simple Chinese dictionary using the MEAN stack'
+            strapline: 'Simple Chinese dictionary using the MEAN stack',
+            footercontent: 'All content © 2017 by Antoine Joly'
         }
     });
 };
@@ -26,7 +27,8 @@ var renderResults = function(req, res, responseBody) {
         title: 'XiaoMiantiao - simple Chinese dictionary',
         pageHeader: {
             title: 'XiaoMiantiao',
-            strapline: 'Simple Chinese dictionary using the MEAN stack'
+            strapline: 'Simple Chinese dictionary using the MEAN stack',
+            footercontent: 'All content © 2017 by Antoine Joly'
         },
         queryData: {
             nbresults: 3,
@@ -54,7 +56,8 @@ module.exports.results = function(req, res) {
         title: 'XiaoMiantiao - simple Chinese dictionary',
         pageHeader: {
             title: 'XiaoMiantiao',
-            strapline: 'Simple Chinese dictionary using the MEAN stack'
+            strapline: 'Simple Chinese dictionary using the MEAN stack',
+            footercontent: 'All content © 2017 by Antoine Joly'
         },
         queryData: {
             nbresults: 3,
