@@ -1,5 +1,7 @@
 extends layout
 
+
+
 block content
     .row
     p
@@ -51,8 +53,8 @@ block content
                         td {{result.level}}
                         td
                           span(ng-repeat="char in result.characters") 
-                            abbr(title='{{char.pinyin}} - {{char.translation}}')  {{char.chinese}} ,
-                    
+                              button.btn.btn-default(type='button', uib-popover="{{char.pinyin}} - {{char.translation}}") {{char.chinese}} 
+
     .row
     p
     .row

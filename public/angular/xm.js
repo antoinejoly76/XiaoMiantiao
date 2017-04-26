@@ -1,4 +1,4 @@
-var myApp = angular.module('xmapp', []);
+var myApp = angular.module('xmapp',['ui.bootstrap']);
 
 
 // Search related  shared functions and variables
@@ -334,7 +334,20 @@ var ValidateLandscapePictures = function($http) {
 
 // Three controllers for search and one service to call the REST API
 
-
+myApp.directive('tooltip', function(){
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs){
+            $(element).hover(function(){
+                // on mouseenter
+                $(element).tooltip('show');
+            }, function(){
+                // on mouseleave
+                $(element).tooltip('hide');
+            });
+        }
+    };
+});
 
 myApp.controller('navBarCtrl',navBarCtrl).controller('resultsListCtrl', resultsListCtrl).controller('inputSearchCtrl', inputSearchCtrl).controller('queryInfoCtrl', queryInfoCtrl).service('resultsData', resultsData).controller('FlickrbuildPicCtrl', FlickrbuildPicCtrl).service('ValidateLandscapePictures', ValidateLandscapePictures).service('FlickrsearchChinaPictures', FlickrsearchChinaPictures)
   .controller('FlickrbuildPicCtrlv2', FlickrbuildPicCtrlv2).controller('StyleCtrl', StyleCtrl).filter('removeblanksFilter', removeblanksFilter);

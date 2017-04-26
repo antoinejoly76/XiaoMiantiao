@@ -8,7 +8,7 @@ html(ng-app='xmapp')
             img(alt='Brand', src="/images/xiaomiantiaos.png")
           ul.nav.navbar-nav
            li(ng-class="{active: Fact.activeTab == 'Home'}")
-              a(href="/") Home 
+              a(href="/") Home
            li(ng-class="{active: Fact.activeTab == 'Search'}")
               a(href="/results/") Search
             li(ng-class="{active: Fact.activeTab == 'About'}")
@@ -28,9 +28,6 @@ html(ng-app='xmapp')
           
           script(src='/javascripts/jquery.min.js')
           script(src='/angular/angular.min.js')
-          script(src='/angular/angular.min.js')
+          script(src='/angular/ui-bootstrap-tpls-2.5.0.min.js')
           script(src='/angular/xm.js')
           script(src='/bootstrap/js/bootstrap.min.js')    
-      footer.footer
-        .container
-          p.text-muted=pageHeader.footercontent
