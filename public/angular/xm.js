@@ -35,12 +35,12 @@ myApp.config(['$httpProvider', function($httpProvider) {
 
 var queryInfoCtrl = function(resultsData, $scope, Fact) {
   $scope.Fact = Fact;
-}
+};
 
 var resultsListCtrl = function(resultsData, $scope, Fact) {
   $scope.Fact = Fact;
 
-}
+};
 
 var navBarCtrl = function($scope, $location, Fact) {
   console.log(Fact.searchparam);
@@ -53,47 +53,46 @@ var navBarCtrl = function($scope, $location, Fact) {
           $scope.Fact.activeTab = "About";
     else
           $scope.Fact.activeTab = "Home";
-  }
+  };
 
 
-var inputSearchCtrl = function(resultsData, $scope, Fact) {
+var inputSearchCtrl = function(resultsData, $scope, LevenshteinDistance, Fact) {
   $scope.Fact = Fact;
   console.log(Fact.searchparam)
   $scope.newSearch = function() {
     resultsData.runSearch(Fact.searchparam, Fact.searchtype).async().then(function(d) {
       $scope.Fact.results = d.data1;
+      console.log($scope.Fact.results);
+
+      if (Fact.searchtype === 'pinyin') { // We only need Levenshtein for pinyin mode
+        var distancechar = 100;
+        var distanceword = 0;
+        for (var i=0; i < d.data1.length; i++) {
+            console.log("distancechar" + distancechar);
+           console.log($scope.Fact.results[i].characters.length);
+            for (var j=0; j < $scope.Fact.results[i].characters.length; j++) {
+                      console.log("distancechar" + distancechar);
+                  console.log($scope.Fact.results[i].characters[j].pinyin3)
+                  var tmp = LevenshteinDistance.calculate(Fact.searchparam, $scope.Fact.results[i].characters[j].pinyin3);
+                  console.log(tmp);
+                  console.log(distancechar);
+                  if (tmp < distancechar) distancechar = tmp;
+            }
+            distanceword = LevenshteinDistance.calculate(Fact.searchparam,  $scope.Fact.results[i].pinyin3 )
+          console.log("For string" + $scope.Fact.results[i].pinyin1 + " distancechar = " +  distancechar + " distanceword = " +  distanceword);
+          $scope.Fact.results[i]['distance'] = distancechar * 3 + distanceword;
+          distancechar = 100;
+        }
+      }
+
       $scope.Fact.nbresults = d.data1.length;
       $scope.Fact.timequery = d.time1 / 1000;
       console.log(d);
     });
   }
-}
-
-var removeblanksFilter = function() {
-  return function(string) {
-    if (!angular.isString(string)) {
-      return string;
-    }
-    return string.replace(/[\s]/g, '');
-  };
-}
-
-
-var FlickrbuildPicCtrl = function(FlickrsearchChinaPictures, ValidateLandscapePictures, $scope) {
-  var picid;
-  FlickrsearchChinaPictures.runSearch().async().then(function(d) {
-    $scope.getChinaPicUrl = 'https://farm' + d.data.farm + '.staticflickr.com/' + d.data.server + '/' + d.data.id + '_' + d.data.secret + '_z.jpg';
-    console.log($scope.getChinaPicUrl);
-    $scope.getChinaPicTitle = d.data.title;
-    picid = d.data.id;
-
-
-    ValidateLandscapePictures.isLandscape(picid).async().then(function(d) {
-      console.log(d.isLandscape);
-    });
-  });
-
 };
+
+
 
 var StyleCtrl = function($scope) {
   $scope.class1 = "";
@@ -119,7 +118,7 @@ var StyleCtrl = function($scope) {
     }
     console.log("AFTER - class 1 " + $scope.class1 + " class2" + $scope.class2 + " class3" + $scope.class3)
   }
-}
+};
 
 
 var resultsData = function($http) {
@@ -139,7 +138,7 @@ var resultsData = function($http) {
     };
     return myService;
   }
-}
+};
 
 
 var FlickrbuildPicCtrlv2 = function(FlickrsearchChinaPictures, ValidateLandscapePictures, $scope) {
@@ -250,7 +249,7 @@ var FlickrbuildPicCtrlv2 = function(FlickrsearchChinaPictures, ValidateLandscape
 
 
 
-}
+};
 
 
 
@@ -288,7 +287,7 @@ var FlickrsearchChinaPictures = function($http) {
     };
     return myService;
   }
-}
+};
 
 var ValidateLandscapePictures = function($http) {
   this.isLandscape = function(picId) {
@@ -329,25 +328,65 @@ var ValidateLandscapePictures = function($http) {
     };
     return myService;
   }
+};
+
+var LevenshteinDistance = function() {
+  this.calculate = function(a,b) {
+  // Compute the edit distance between the two given strings
+      if (a.length === 0) return b.length;
+      if (b.length === 0) return a.length;
+
+      var matrix = [];
+
+      // increment along the first column of each row
+      var i;
+      for (i = 0; i <= b.length; i++) {
+        matrix[i] = [i];
+      }
+
+      // increment each column in the first row
+      var j;
+      for (j = 0; j <= a.length; j++) {
+        matrix[0][j] = j;
+      }
+
+      // Fill in the rest of the matrix
+      for (i = 1; i <= b.length; i++) {
+        for (j = 1; j <= a.length; j++) {
+          if (b.charAt(i-1) == a.charAt(j-1)) {
+            matrix[i][j] = matrix[i-1][j-1];
+          } else {
+            matrix[i][j] = Math.min(matrix[i-1][j-1] + 1, // substitution
+                                    Math.min(matrix[i][j-1] + 1, // insertion
+                                             matrix[i-1][j] + 1)); // deletion
+          }
+        }
+      }
+
+      return matrix[b.length][a.length];
+    };
 }
 
+var orderObjectBy = function() {
+  return function(input, attribute) {
+     if (!angular.isObject(input)) return input;
 
-// Three controllers for search and one service to call the REST API
+     var array = [];
+     for(var objectKey in input) {
+         array.push(input[objectKey]);
+     }
 
-myApp.directive('tooltip', function(){
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs){
-            $(element).hover(function(){
-                // on mouseenter
-                $(element).tooltip('show');
-            }, function(){
-                // on mouseleave
-                $(element).tooltip('hide');
-            });
-        }
-    };
-});
+     array.sort(function(a, b){
+         a = parseInt(a[attribute]);
+         b = parseInt(b[attribute]);
+         return a - b;
+     });
+     return array;
+  }
+};
 
-myApp.controller('navBarCtrl',navBarCtrl).controller('resultsListCtrl', resultsListCtrl).controller('inputSearchCtrl', inputSearchCtrl).controller('queryInfoCtrl', queryInfoCtrl).service('resultsData', resultsData).controller('FlickrbuildPicCtrl', FlickrbuildPicCtrl).service('ValidateLandscapePictures', ValidateLandscapePictures).service('FlickrsearchChinaPictures', FlickrsearchChinaPictures)
-  .controller('FlickrbuildPicCtrlv2', FlickrbuildPicCtrlv2).controller('StyleCtrl', StyleCtrl).filter('removeblanksFilter', removeblanksFilter);
+
+
+
+myApp.controller('navBarCtrl',navBarCtrl).controller('resultsListCtrl', resultsListCtrl).controller('inputSearchCtrl', inputSearchCtrl).service('LevenshteinDistance', LevenshteinDistance).controller('queryInfoCtrl', queryInfoCtrl).service('resultsData', resultsData).service('ValidateLandscapePictures', ValidateLandscapePictures).service('FlickrsearchChinaPictures', FlickrsearchChinaPictures)
+  .controller('FlickrbuildPicCtrlv2', FlickrbuildPicCtrlv2).controller('StyleCtrl', StyleCtrl).filter('orderObjectBy', orderObjectBy);

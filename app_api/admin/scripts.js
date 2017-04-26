@@ -31,6 +31,21 @@ module.exports.addToneToChars = function(req, res) {
     });
 };
 
+module.exports.addStrippedPinyinToChars = function() {
+    var cursor = Char.find({}).cursor();
+    cursor.on('data', function(wd) {
+      var pinyin = wd.pinyin;
+      var strpinyin = pinyin.replace(/[ūǖǚùú]/g, "u").replace(/[ōóǒò]/g, "o").replace(/[ēéěè]/g, "e").replace(/[īíǐì]/g, "i").replace(/[āáǎà]/g, "a");
+      wd.pinyin3 = strpinyin
+      wd.save(function(err, wd) {
+              console.log("added stripped pinyin for" + wd)
+      });
+    });
+    cursor.on('close', function() {
+        console.log("stream closed");
+    });
+};
+
 function setTone(wd) {
   var first_tone_pattern = /[ūǖōāēī]/;
   var second_tone_pattern = /[éóúáí]/;
@@ -149,7 +164,8 @@ function updateWord(wd, num) {
                     chinese: char1.chinese,
                     pinyin: char1.pinyin,
                     translation: char1.translation,
-                    tone: char1.tone
+                    tone: char1.tone,
+                    pinyin3: char1.pinyin3
                 });
                 wd.save(function(err, wd) {
                     console.log("save successful for " + wd)

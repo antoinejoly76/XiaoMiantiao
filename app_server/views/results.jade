@@ -43,7 +43,8 @@ block content
                         th English
                         th HSK level
                         th Associated characters 
-                    tr(ng-repeat="result in Fact.results")
+                        th Distance
+                    tr(ng-repeat="result in Fact.results | orderObjectBy: 'distance'" )
                         td 
                           span(ng-repeat="char in result.characters") 
                             span(ng-class="{red: char.tone == 1, orange: char.tone == 2, green: char.tone == 3, blue: char.tone == 4, black: char.tone == 0}") 
@@ -54,6 +55,7 @@ block content
                         td
                           span(ng-repeat="char in result.characters") 
                               button.btn.btn-default(type='button', uib-popover="{{char.pinyin}} - {{char.translation}}") {{char.chinese}} 
+                        td {{result.distance}}
 
     .row
     p

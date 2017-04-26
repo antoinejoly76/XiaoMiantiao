@@ -3,6 +3,7 @@ var mongoose = require ('mongoose');
 var characterSchema = new mongoose.Schema({
     chinese: {type: String, index: true, unique: true},
     pinyin: String,
+    pinyin3: String,
     translation: String,
     tone: Number
 });
