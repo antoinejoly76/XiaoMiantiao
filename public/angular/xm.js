@@ -80,7 +80,7 @@ var inputSearchCtrl = function(resultsData, $scope, LevenshteinDistance, Fact) {
             }
             distanceword = LevenshteinDistance.calculate(Fact.searchparam,  $scope.Fact.results[i].pinyin3 )
           console.log("For string" + $scope.Fact.results[i].pinyin1 + " distancechar = " +  distancechar + " distanceword = " +  distanceword);
-          $scope.Fact.results[i]['distance'] = distancechar * 3 + distanceword;
+          $scope.Fact.results[i]['distance'] = distancechar * 10 + distanceword;
           distancechar = 100;
         }
       }

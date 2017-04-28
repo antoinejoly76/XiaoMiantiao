@@ -47,6 +47,20 @@ tr {
   color: green;
 }
 
+
+.lred {
+    background-color: red;
+}
+
+
+.lorange {
+  background-color: orange;
+}
+
+.lgreen {
+  background-color: green;
+}
+
 .brandcl {
   padding: 2px 2px;
   font-size: 15px;
@@ -61,6 +75,10 @@ tr {
 .hidden {
   display: none !important;
   visibility: hidden !important;
+}
+
+.littlepad {
+  padding: 5px;
 }
 
 .footer {

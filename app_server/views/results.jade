@@ -51,7 +51,8 @@ block content
                                  {{char.chinese }}
                         td {{result.pinyin2}}
                         td {{result.translation}}
-                        td {{result.level}}
+                        td 
+                          span.label.label-default(ng-class="{lred: result.level == 'HSK3', lorange: result.level == 'HSK2', lgreen: result.level == 'HSK1'}") {{result.level}}
                         td
                           span(ng-repeat="char in result.characters") 
                               button.btn.btn-default(type='button', uib-popover="{{char.pinyin}} - {{char.translation}}") {{char.chinese}} 
